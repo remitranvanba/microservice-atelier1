@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Page</title>
+  </head>
+  <body>
+    <p class="card-title">Card Form</p>
+    <div class="wrapper">
+      <form>
+        <div class="card">
+          <label>Name:</label>
+          <input type="text" id="name" />
+          <label>Description:</label>
+          <input type="text" class="description" id="description" />
+
+          <label>ImageUrl:</label>
+          <input type="text" id="imageUrl" />
+
+          <label>Family:</label>
+          <select id="family">
+            <option>1</option>
+            <option>2</option>
+          </select>
+          <label>Affinity:</label>
+          <select id="affinity">
+            <option>1</option>
+            <option>2</option>
+          </select>
+          <label>HP</label>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="hp"
+          />
+
+          <label>Energy</label>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="energy"
+          />
+
+          <label>Attack</label>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="attack"
+          />
+
+          <label>Defense</label>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="defense"
+          />
+        </div>
+      </form>
+    </div>
+    <div class="button-wrapper">
+      <button class="cancel-button" type="button">Cancel</button>
+      <button
+        class="valid-button"
+        type="submit"
+        value="send a request"
+        id="submit"
+      >
+        OK
+      </button>
+    </div>
+  </body>
+</html>
+<script>
+  class Card {
+    constructor(
+      name,
+      description,
+      imgUrl,
+      smallImgUrl,
+      id,
+      family,
+      affinity,
+      hp,
+      energy,
+      attack,
+      defence,
+      price,
+      userId
+    ) {
+      this.name = name;
+      this.description = description;
+      this.imgUrl = imgUrl;
+      this.smallImgUrl = smallImgUrl;
+      this.id = id;
+      this.family = family;
+      this.affinity = affinity;
+      this.hp = hp;
+      this.energy = energy;
+      this.attack = attack;
+      this.defence = defence;
+      this.price = price;
+      this.userId = userId;https://github.com/remitranvanba/microservice-atelier1.git
+    }
+  }
+
+  const submitButton = document.getElementById("submit");
+  submitButton.addEventListener("click", (e) => {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        // fin de requête, on s'en fout
+      }
+    };
+    xhttp.open("POST", "http://tp.cpe.fr:8083/card", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    let finalString = "";
+    const card = new Card(
+      document.getElementById("name").value,
+      document.getElementById("description").value,
+      document.getElementById("imageUrl").value,
+      0,
+      document.getElementById("family").value,
+      document.getElementById("affinity").value,
+      document.getElementById("hp").value,
+      document.getElementById("energy").value,
+      document.getElementById("attack").value,
+      document.getElementById("defense").value,
+      500,
+      0
+    );
+    xhttp.send(JSON.stringify(card));
+  });
+</script>
+
+<style>
+  body {
+    font-size: 2em;
+  }
+
+  .wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10em;
+  }
+  .card {
+    display: grid;
+    grid-template-columns: 200px 200px;
+    text-align: end;
+    padding-right: 100px;
+    column-gap: 50px;
+  }
+  .label {
+    grid-column: 1 / 2;
+    grid-row: 1;
+  }
+  .value {
+    grid-column: 2 / 2;
+    grid-row: 2;
+  }
+  .card-title {
+    text-align: center;
+  }
+  .cancel-button {
+    background-color: red;
+    font-size: 25px;
+  }
+  .valid-button {
+    color: black;
+    background-color: green;
+    font-size: 25px;
+  }
+</style>

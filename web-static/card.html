@@ -1,0 +1,89 @@
+<!-- used to display all cards -->
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cards</title>
+  </head>
+  <body>
+    <script>
+      function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            const card_wrapper = document.getElementById("card-wrapper");
+            const obj = JSON.parse(this.responseText);
+            for (o of obj) {
+              let div = document.createElement("div");
+              div.classList.add("card-js-wrapper");
+
+              let affinity = document.createElement("p");
+              affinity.classList.add("content-p");
+              let attack = document.createElement("p");
+              attack.classList.add("content-p");
+              let defense = document.createElement("p");
+              defense.classList.add("content-p");
+              let description = document.createElement("p");
+              description.classList.add("content-p");
+              let family = document.createElement("p");
+              family.classList.add("content-p");
+              let hp = document.createElement("p");
+              hp.classList.add("content-p");
+              let id = document.createElement("p");
+              id.classList.add("content-p");
+              let imgUrl = document.createElement("img");
+              imgUrl.classList.add("content-p");
+              let name = document.createElement("p");
+              name.classList.add("content-p");
+              let price = document.createElement("p");
+              price.classList.add("content-p");
+              affinity.textContent = o.affinity;
+              attack.textContent = o.attack;
+              defense.textContent = o.defense;
+              description.textContent = o.description;
+              family.textContent = o.family;
+              hp.textContent = o.hp;
+              id.textContent = o.id;
+              imgUrl.src = o.imgUrl;
+              name.textContent = o.name;
+              price.textContent = o.price;
+
+              div.appendChild(affinity);
+              div.appendChild(attack);
+              div.appendChild(defense);
+              div.appendChild(description);
+              div.appendChild(family);
+              div.appendChild(hp);
+              div.appendChild(id);
+              div.appendChild(imgUrl);
+              div.appendChild(name);
+              div.appendChild(price);
+              card_wrapper.appendChild(div);
+              console.log(o);
+            }
+          }
+        };
+        xhttp.open("GET", "http://tp.cpe.fr:8083/cards", true);
+        xhttp.send();
+      }
+    </script>
+    <button class="load-button" type="button" onclick="loadDoc()">
+      Load cards
+    </button>
+
+    <div id="card-wrapper"></div>
+  </body>
+</html>
+
+<style>
+  .card-js-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .content-p {
+    text-align: center;
+    width: 100%;
+  }
+</style>
